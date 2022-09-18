@@ -3,10 +3,15 @@ package in.das.app.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import java.util.UUID;
 
 @Slf4j
 @Component
 public class CommonUtils {
+
+    public static String generateUUIDString(){
+        return UUID.randomUUID().toString();
+    }
 
     public static String convertPOJOIntoJSONString(final Object pojo){
         try{

@@ -1,5 +1,7 @@
 package in.das.app.config;
 
+import in.das.app.logging.aop.ServiceAspect;
+import in.das.app.logging.filters.ServerContainerRequestFilter;
 import in.das.app.logging.filters.ServerContainerResponseFilter;
 import in.das.app.resource.StudentResource;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -11,5 +13,7 @@ public class RestConfig extends ResourceConfig {
     public RestConfig(Class<?>... classes){
         register(StudentResource.class);
         register(ServerContainerResponseFilter.class);
+        register(ServerContainerRequestFilter.class);
+        register(ServiceAspect.class);
     }
 }

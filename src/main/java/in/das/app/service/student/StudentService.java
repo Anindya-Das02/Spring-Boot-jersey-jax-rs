@@ -1,5 +1,6 @@
-package in.das.app.service;
+package in.das.app.service.student;
 
+import in.das.app.exceptions.student.StudentException;
 import in.das.app.model.Student;
 import in.das.app.model.response.StudentResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +16,8 @@ public class StudentService {
 
     public StudentResponse addStudentService(final Student student){
         if(BANNED_STUDENT_NAMES.contains(student.getName())){
-            return new StudentResponse(){{
-                log.error("student banned! student-name=\"{}\"",student.getName());
-                setStatus("error");
-                setMessage("banned student! contact admin");
-            }};
+            log.error("banned student name={}", student.getName());
+            throw new StudentException("Banned Student","error");
         }
         log.info("student add success!");
         return new StudentResponse(){{

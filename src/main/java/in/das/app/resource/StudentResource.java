@@ -1,8 +1,9 @@
 package in.das.app.resource;
 
+import in.das.app.constants.ResourcePath;
 import in.das.app.model.Student;
 import in.das.app.model.response.StudentResponse;
-import in.das.app.service.StudentService;
+import in.das.app.service.student.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
@@ -11,7 +12,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/student")
+@Path(ResourcePath.STUDENT_RESOURCE_PATH)
 @Slf4j
 public class StudentResource {
 
