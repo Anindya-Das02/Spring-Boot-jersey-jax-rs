@@ -53,6 +53,4 @@ public class StudentResource {
         String userId = httpHeaders.getHeaderString("user-id");
         return studentService.addStudentService(student);
     }
-
-
 }

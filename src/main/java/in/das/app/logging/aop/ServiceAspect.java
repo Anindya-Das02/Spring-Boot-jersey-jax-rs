@@ -5,25 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import javax.ws.rs.ext.Provider;
 import java.time.Duration;
 import java.time.Instant;
 
 @Aspect
 @Component
 @Slf4j
-@Provider
-@Order(2)
 public class ServiceAspect {
 
-    @Around("execution(* in.das.app.service.*.*(..))")
+    @Around("execution(* in.das.app.service.*.*.*(..))")
     public Object serviceAspect(ProceedingJoinPoint joinPoint) throws Throwable {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
-        log.info("Entering Into:: className=\""+className+"\" methodName=\""+methodName+"\"");
+        log.info("Entering Into :: className=\""+className+"\" methodName=\""+methodName+"\"");
         Instant start = Instant.now();
         Object response = null;
         try{

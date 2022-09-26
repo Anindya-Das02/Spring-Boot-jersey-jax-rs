@@ -15,7 +15,6 @@ import java.time.temporal.Temporal;
 
 @Provider
 @Slf4j
-@Order(3)
 public class ServerContainerResponseFilter implements ContainerResponseFilter {
 
     private static final String REQUEST_CONTEXT = "request-context";

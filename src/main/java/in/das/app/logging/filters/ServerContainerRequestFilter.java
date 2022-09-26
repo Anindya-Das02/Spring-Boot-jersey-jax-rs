@@ -17,7 +17,6 @@ import java.time.Instant;
 
 @Slf4j
 @Provider
-@Order(1)
 public class ServerContainerRequestFilter implements ContainerRequestFilter {
 
     @Override
