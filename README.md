@@ -1,5 +1,10 @@
 # Spring-Boot-jersey-jax-rs
 
+### Run using Docker:
+```
+$ sudo docker pull anindyad3v/springboot-template-jersey-jaxrs
+```
+
 ### Concepts:
 JAX-RS, REST apis, Spring AOP (Aspect), slf4j logging, Custom Runtime Exceptions, Filters (ServerContainers)  
 
