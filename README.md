@@ -3,6 +3,7 @@
 ### Run using Docker:
 ```
 $ sudo docker pull anindyad3v/springboot-template-jersey-jaxrs
+$ sudo docker run -d -p <your_host>:8080 <container_id>
 ```
 
 ### Concepts:
