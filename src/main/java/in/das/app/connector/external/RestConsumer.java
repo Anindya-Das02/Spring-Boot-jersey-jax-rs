@@ -3,6 +3,7 @@ package in.das.app.connector.external;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class RestConsumer {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     public <T> T simpleGet(final String url, final TypeReference<T> clazz){
         ResponseEntity<String> responseEntity = null;
