@@ -91,6 +91,7 @@ i.d.a.c.logging.LoggingFilter serviceName="" reqId=""
 - [ ] Swagger
 - [X] Custom logging
 - [X] Add unique reqIds for logging
-- [ ] DB (Mybatis)
+- [X] DB (Mybatis)
+- [ ] Mybatis SQL logging
 - [ ] Caching
 - [X] Docker containerize
