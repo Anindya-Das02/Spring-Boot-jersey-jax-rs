@@ -1,16 +1,22 @@
 package in.das.app.config;
 
 import in.das.app.connector.client.TodoClient;
+import in.das.app.connector.logging.LoggingFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.Duration;
 
 @Configuration
 public class BeanConfig {
+
+    @Autowired
+    private LoggingFilter loggingFilter;
 
     @Bean
     public TodoClient todoClient(@Value("${todo.url.base}") final String url){
@@ -23,5 +29,10 @@ public class BeanConfig {
                 .setConnectTimeout(Duration.ofSeconds(15))
                 .setReadTimeout(Duration.ofSeconds(15))
                 .build();
+    }
+
+    @Bean
+    public WebClient webClient(){
+        return WebClient.builder().filter(loggingFilter).build();
     }
 }

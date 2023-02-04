@@ -58,6 +58,34 @@ Spring Boot, JAX-RS (Jersey), REST apis, Maven, AOP (Aspect), slf4j logging, Cus
 12:29:28.730 [http-nio-8080-exec-4] INFO  i.d.a.l.f.ServerContainerResponseFilter serviceName="StudentResource.serverHealthCheck" reqId="08dd08be-223a-4e7c-b8ce-8df97d79b2d2" - url=http://localhost:8080/student/_health httpMethod=GET Request-Headers:service-name:Health-check accept-encoding:gzip, deflate, br accept:*/* user-agent:Thunder Client (https://www.thunderclient.com) host:localhost:8080 connection:close  statusCode=200 Response-Headers:Content-Type:text/plain x-provider:server-app-response ResponsePayload="Ok Response"  totalExecutionTimeInMs=19
 ```
 
+## Learnings
+### Custom Exception response (ExceptionMapper)
+__ExceptionMapper__ is a component in JAX-RS (Java API for REST-ful Web Services) that allows you to map exceptions to appropriate HTTP response codes. It is used to handle exceptions thrown during the execution of a REST-ful API and convert them into a specific HTTP response.  
+Use `ExceptionMapper<T>` interface to create custom exception mappers. (T is the custom exception class)
+```java
+... implements ExceptionMapper<AgeValidationException>
+... implements ExceptionMapper<StudentValidationException>
+```
+
+### WebClient & ExchangeFilterFunction (logging)
+__WebClient__ is a reactive, non-blocking, and client-side HTTP client available in Spring WebFlux. It allows you to make HTTP requests in a functional and reactive way, and it supports both synchronous and asynchronous communication with the server.  
+<br/>
+__ExchangeFilterFunction__ is a functional interface in Spring WebFlux that allows you to apply custom logic to requests and responses being processed by the WebClient. An ExchangeFilterFunction can be used to add headers, modify the request body, or process the response before it is returned to the client. In this project they are used to log request and response for later debugging processes.  
+_see: `in.das.app.connector.logging.LoggingFilter.java`_
+
+#### ExchangeFilterFunction Logging output
+```
+13:05:40.337 [http-nio-8080-exec-1] INFO  i.d.app.connector.client.TodoClient serviceName="TodoResource.getTodoItem" reqId="2c4ae272-40c2-4773-82e2-52937ebb85d9" - fetching todo item...
+13:05:40.756 [http-nio-8080-exec-1] INFO  i.d.a.c.logging.LoggingFilter serviceName="TodoResource.getTodoItem" reqId="2c4ae272-40c2-4773-82e2-52937ebb85d9" - Request url=https://jsonplaceholder.typicode.com/todos/5 headers={} body=org.springframework.web.reactive.function.BodyInserters$$Lambda$801/0x000000080113bd88@50d28764
+13:05:46.189 [reactor-http-epoll-2] INFO  i.d.a.c.logging.LoggingFilter serviceName="" reqId="" - Response from url="https://jsonplaceholder.typicode.com/todos/5" status="200 OK" headers="{Transfer-Encoding=chunked, Server=cloudflare, CF-RAY=7941bb3d4bbb2e9f-HYD, X-Ratelimit-Remaining=998, X-Content-Type-Options=nosniff, Connection=keep-alive, Pragma=no-cache, Date=Sat, 04 Feb 2023 07:35:46 GMT, Via=1.1 vegur, X-Ratelimit-Reset=1675407103, X-Ratelimit-Limit=1000, CF-Cache-Status=REVALIDATED, Cache-Control=max-age=43200, Etag=W/"80-nIDrpgGIpb97HlRnMUJPolcZWGI", NEL={"success_fraction":0,"report_to":"cf-nel","max_age":604800}, Access-Control-Allow-Credentials=true, Report-To={"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=vzJqxSVhrzF9DciaY2fGV4XeeMrR6o92COjFqHlvLWR2inyzaHPe6EioQqh5WH9UdIbgOE6FvUW6qCbpjM%2BPc6EDlKWSZiiPKwDU%2FSmD6BDUjJjBCPzzCndO9lHZOzjFbpnd%2BbFg5NZp%2FCckWMZO"}],"group":"cf-nel","max_age":604800}, Vary=Origin, Accept-Encoding, Expires=-1, alt-svc=h3=":443"; ma=86400, h3-29=":443"; ma=86400, Content-Type=application/json; charset=utf-8, X-Powered-By=Express}" timeTaken="5380 ms"
+```
+
+### Issues Observed:
+- No `serviceName` & `reqId` logged for `LoggingFilter` on receiving response. 
+```
+i.d.a.c.logging.LoggingFilter serviceName="" reqId=""
+```
+
 ### Yet to Add:
 
 - [ ] Swagger

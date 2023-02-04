@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path(ResourcePath.TODO_RESOURCE_PATH)
 @Slf4j
@@ -25,5 +26,13 @@ public class TodoResource extends BaseResource {
     public Todo getTodoItem(@PathParam("id") final int id){
         log.info("fetching Todo details for id: {}",id);
         return todoService.getTodoItemDetails(id);
+    }
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Todo> getAllTodoItems(){
+        log.info("fetching all Todo details...");
+        return todoService.getAllTodoItems();
     }
 }
